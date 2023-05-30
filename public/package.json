@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "compile": "tsc -p ."
-  },
-  "dependencies": {
-    "babylonjs": "^6.5.0"
-  }
-}
