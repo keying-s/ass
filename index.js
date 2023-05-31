@@ -5,19 +5,32 @@ const bodyParser = require("koa-bodyparser");
 const fs = require("fs");
 const path = require("path");
 
+const wx=require("./wxAuth");
+
+
+const app = new Koa();
 const router = new Router();
 
 const homePage = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
 
 
 let count=0;
+
+app.use(async (ctx, next) => {
+  ctx.set("Access-Control-Allow-Origin", "*")
+  await next()
+})
 // 首页
-router.get("/", async (ctx) => {
-  ctx.body = homePage;
+router.get("/api/getSign", async (ctx) => {
+    let config=await wx.getSign();
+    ctx.body = {
+      type: "config",
+      data: config
+    }
 });
 
 // 更新计数
-router.post("/api/count", async (ctx) => {
+router.post("/api/c", async (ctx) => {
   const { request } = ctx;
   const { action } = request.body;
   if (action === "inc") {
@@ -47,7 +60,7 @@ router.get("/api/wx_openid", async (ctx) => {
   }
 });
 
-const app = new Koa();
+
 app
   .use(logger())
   .use(bodyParser())
@@ -61,3 +74,6 @@ async function bootstrap() {
   });
 }
 bootstrap();
+
+
+
