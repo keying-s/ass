@@ -1,8 +1,4 @@
-FROM alpine:3.13
-
-RUN apk add ca-certificates
-
-RUN apk add --update --no-cache nodejs npm
+FROM node:18-slim
 
 WORKDIR /app
 
