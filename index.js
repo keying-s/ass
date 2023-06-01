@@ -19,6 +19,7 @@ let count = 0;
 app.use(async (ctx, next) => {
   console.log(111);
   ctx.set("Access-Control-Allow-Origin", "*");
+  ctx.set('Access-Control-Allow-Headers','Content-Type, Authorization');
   await next()
 })
 // 首页
