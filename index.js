@@ -5,7 +5,7 @@ const bodyParser = require("koa-bodyparser");
 const fs = require("fs");
 const path = require("path");
 
-const wx=require("./wxAuth");
+const wx = require("./wxAuth");
 
 
 const app = new Koa();
@@ -14,19 +14,50 @@ const router = new Router();
 const homePage = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
 
 
-let count=0;
+let count = 0;
 
 app.use(async (ctx, next) => {
-  ctx.set("Access-Control-Allow-Origin", "*")
+  console.log(111);
+  ctx.set("Access-Control-Allow-Origin", "*");
   await next()
 })
 // 首页
 router.get("/api/getSign", async (ctx) => {
-    let config=await wx.getSign();
+  let config = await wx.getSign();
+  ctx.body = {
+    type: "config",
+    data: config
+  }
+});
+
+router.post("/api/getAnswer", async (ctx) => {
+
+  const { request } = ctx;
+  const ques = request.body.data;
+  try {
+    let response = await fetch('https://thevim.club/api/dangan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: ques,
+        type: 'question'
+      })
+    });
+    let data = await response.json();
     ctx.body = {
-      type: "config",
-      data: config
-    }
+      type: "answer",
+      index: data.index
+    };
+  } catch (err) {
+    console.log(err)
+    ctx.body = {
+      type: "err",
+      data: ''
+    };
+  }
+  return;
 });
 
 // 更新计数

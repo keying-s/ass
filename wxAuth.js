@@ -77,15 +77,17 @@ class wx {
          */
         if(!wx.jsapiTicket){
             try{
-                //wx.jsapiTicket=await wx.getJSApi();
+                wx.jsapiTicket=await wx.getJSApi();
             }catch(err){
                 console.log(err);
-                return;
+                return {
+                    err:"获取jsapi_ticket失败"
+                }
             }
         }
         var ret = {
-          //jsapi_ticket: wx.jsapiTicket,
-          jsapi_ticket:`O3SMpm8bG7kJnF36aXbe8-BnLIxuw25tWAwPiHJwPuqWOiSkRauP91vmRkDvbvhQIoCy2tZWrjNuzPGz_zXelg`,
+          jsapi_ticket: wx.jsapiTicket,
+          //jsapi_ticket:`O3SMpm8bG7kJnF36aXbe8-BnLIxuw25tWAwPiHJwPuqWOiSkRauP91vmRkDvbvhQIoCy2tZWrjNuzPGz_zXelg`,
           nonceStr: createNonceStr(),
           timestamp: createTimestamp(),
           url: wx.url
