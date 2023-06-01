@@ -1,5 +1,9 @@
 FROM node:18-slim
 
+RUN apk add ca-certificates
+
+RUN apk add --update --no-cache nodejs npm
+
 WORKDIR /app
 
 COPY package*.json /app/
