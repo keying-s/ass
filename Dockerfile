@@ -1,4 +1,4 @@
-FROM node:18-slim
+FROM alpine:3.18
 
 RUN apk add ca-certificates
 
