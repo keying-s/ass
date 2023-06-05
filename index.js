@@ -16,6 +16,9 @@ const homePage = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
 
 let count = 0;
 
+//读取本地json文件且转为对象
+let QA = JSON.parse(fs.readFileSync('./data.json', "utf-8"));
+
 app.use(async (ctx, next) => {
   console.log(111);
   ctx.set("Access-Control-Allow-Origin", "*");
@@ -47,9 +50,13 @@ router.post("/api/getAnswer", async (ctx) => {
       })
     });
     let data = await response.json();
+    let index=data.index;
+    let answer=QA[index].answer+QA[index].link;
+
     ctx.body = {
       type: "answer",
-      index: data.index
+      index: index,
+      answer: answer
     };
   } catch (err) {
     console.log(err)
