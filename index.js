@@ -59,6 +59,15 @@ router.post("/api/getAnswer", async (ctx) => {
     });
     let data = await response.json();
     let index=data.index;
+    //如果index是数字，说明是答案，否则是错误信息
+    if(isNaN(index)){
+      ctx.body = {
+        type: "answer",
+        index: -1,
+        answer: "网络错误，请稍后再试"
+      };
+      return;
+    }
     let answer=QA[index].answer+QA[index].link;
 
     ctx.body = {
@@ -69,9 +78,11 @@ router.post("/api/getAnswer", async (ctx) => {
   } catch (err) {
     console.log(err)
     ctx.body = {
-      type: "err",
-      data: ''
+      type: "answer",
+      index: -1,
+      answer: "网络错误，请稍后再试"
     };
+    return;
   }
   return;
 });
