@@ -34,6 +34,14 @@ router.get("/api/getSign", async (ctx) => {
   }
 });
 
+router.get("/api/getSign1", async (ctx) => {
+  let config = await wx.getSign('https://prod-3g8h83m1a0675dc6-1318474116.tcloudbaseapp.com/main1/index.html');
+  ctx.body = {
+    type: "config",
+    data: config
+  }
+});
+
 router.post("/api/getAnswer", async (ctx) => {
 
   const { request } = ctx;

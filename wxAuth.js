@@ -64,7 +64,10 @@ class wx {
 
     }
 
-    static async getSign(){
+    static async getSign(url){
+        if(!url){
+            url=wx.url;
+        }
         /**
          * 签名算法
          * 签名生成规则如下：
@@ -90,7 +93,7 @@ class wx {
           //jsapi_ticket:`O3SMpm8bG7kJnF36aXbe8-BnLIxuw25tWAwPiHJwPuqWOiSkRauP91vmRkDvbvhQIoCy2tZWrjNuzPGz_zXelg`,
           nonceStr: createNonceStr(),
           timestamp: createTimestamp(),
-          url: wx.url
+          url: url
         };
         console.log(ret);
         var string = raw(ret)
