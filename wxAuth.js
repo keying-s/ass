@@ -2,6 +2,12 @@
 const crypto = require('crypto');
 const APPID = `wxa4420aae897ee1b3`;
 
+//档案馆appid
+const APPID1=`wx80ad4f9045e63ddf`;
+
+//档案馆appscret
+const APPSECRET1=`42775b76483608811f8f09f71488f3d2`;
+
 const APPSECRET = `d7150df45059d3687b26865b702991aa`;
 
 class wx {
@@ -13,7 +19,7 @@ class wx {
     static getAccessToken() {
         return new Promise((resolve, reject) => {
             if (this.accessToken) return resolve(this.accessToken);
-            const fetchUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`;
+            const fetchUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID1}&secret=${APPSECRET1}`;
             console.log(fetchUrl);
             fetch(fetchUrl).then(response => {return response.json()}).then(response => {
                 let data = response;
@@ -98,7 +104,7 @@ class wx {
         console.log(ret);
         var string = raw(ret)
         ret.signature = sha1(string)
-        ret.appId = APPID;
+        ret.appId = APPID1;
         console.log('ret', ret)
         
         return ret;
